@@ -117,13 +117,7 @@ function OpenEvseViewModel(baseEndpoint, config, status) {
         return self.openevse.time(self.time.timeUpdate);
       }
       return new DummyRequest();
-    },
-    function () { return self.openevse.time_limit(function (limit) {
-      self.selectTimeLimit(limit);
-    }); },
-    function () { return self.openevse.charge_limit(function (limit) {
-      self.selectChargeLimit(limit);
-    }); }
+    }
   ];
   self.updateCount = ko.observable(0);
   self.updateTotal = ko.observable(updateList.length);
