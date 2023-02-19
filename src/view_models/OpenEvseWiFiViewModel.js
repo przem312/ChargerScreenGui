@@ -333,6 +333,23 @@ function OpenEvseWiFiViewModel(baseHost, basePort, baseProtocol)
     });
   };
   // -----------------------------------------------------------------------
+  // Event: Language save
+  // -----------------------------------------------------------------------
+  self.saveIPFetching = ko.observable(false);
+  self.saveIPSuccess = ko.observable(false);
+  self.saveIP = function () {
+    self.saveIPFetching(true);
+    self.saveIPSuccess(false);
+    $.post(self.baseEndpoint() + "/config", JSON.stringify({ ip_addr: self.config.ipaddress() }), function () {
+      self.saveIPSuccess(true);
+    }).fail(function () {
+      alert("Failed to save IP config");
+    }).always(function () {
+      self.saveIPFetching(false);
+    });
+  };
+
+  // -----------------------------------------------------------------------
   // Event: Admin save
   // -----------------------------------------------------------------------
   self.saveAdminFetching = ko.observable(false);
@@ -569,10 +586,11 @@ function OpenEvseWiFiViewModel(baseHost, basePort, baseProtocol)
       test_enabled: self.config.test_enabled(),
       test_vehicle_state: self.config.test_vehicle_state(),
       test_current_power: self.config.test_current_power(),
+      test_current_energy: self.config.test_current_energy(),
     }), function () {
       self.saveTestSuccess(true);
     }).fail(function () {
-      alert("Failed to save MID config");
+      alert("Failed to save Test config");
     }).always(function () {
       self.saveTestFetching(false);
     });

@@ -48,17 +48,16 @@
         <div id="content-1" data-bind="visible: isSystem">
 
           <div class="box380 left">
-            <h2 data-bind="i18n: 'wifisetup'">WiFi Setup</h2>
+            
+            <h2 data-bind="i18n: 'wifisetup'">Network Setup</h2>
             <p><b data-bind="i18n: 'mode'">Mode:</b> <span id="mode" data-bind="text: status.fullMode"></span></p>
 
             <div id="wired-view" data-bind="visible: status.isWired">
-              <p><input data-bind="i18n: 'ip'">IP Address:</b><br><a data-bind="text: status.ipaddress, attr: {href: 'http://'+status.ipaddress()}"></a></p>
-              <p>
-                <b data-bind="i18n: 'sfpackets'">Successful packets:</b><br>
-                <span data-bind="text: status.packets_success"></span><span data-bind="i18n: 'of'"> of </span><span data-bind="text: status.packets_sent"></span>
+              <p><b data-bind="i18n: 'ip'">IP Address:</b><br>
+                <input type="text" autocapitalize="none" data-bind="textInput: config.ipaddress" pattern=".{31}" maxlength="21" required="" /><br />
+
+                <button data-bind="i18n: 'save', click: saveIP, text: (saveIPFetching() ? i18nextko.t('saving') : (saveIPSuccess() ? i18nextko.t('saved') : i18nextko.t('save'))), disable: saveIPFetching">Save</button>
               </p>
-              <p><b data-bind="i18n: 'openevse'">OpenEVSE</b></p>
-              <p><b data-bind="i18n: 'rapipackets'">RAPI packets:</b><br><span data-bind="text: status.comm_success"></span><span data-bind="i18n: 'of'"></span> of <span data-bind="text: status.comm_sent"></span></p>
             </div>
 
             <div id="client-view" data-bind="visible: !wifi.canConfigure() &amp;&amp; !wifi.wifiConnecting() &amp;&amp; !status.isWired()">
@@ -75,13 +74,13 @@
                 </tbody>
               </table>
               <button data-bind="i18n: 'changewifi', click: function () { wifi.forceConfig(true); }">Change WiFi network</button>
-              <p><b data-bind="i18n: 'ip'">IP Address:</b><br><a data-bind="text: status.ipaddress, attr: {href: 'http://'+status.ipaddress()}"></a></p>
-              <p>
-                <b data-bind="i18n: 'sfpackets'">Successful packets:</b><br>
-                <span data-bind="text: status.packets_success"></span><span data-bind="i18n: 'of'"> of </span> <span data-bind="text: status.packets_sent"></span>
+              <p><b data-bind="i18n: 'ip'">IP Address:</b><br>
+                <input type="text" autocapitalize="none" data-bind="textInput: config.ipaddress" pattern=".{31}" maxlength="21" required="" /><br />
               </p>
-              <p><b data-bind="i18n: 'openevse'">OpenEVSE</b></p>
-              <p><b data-bind="i18n: 'rapipackets'">RAPI packets:</b><br><span data-bind="text: status.comm_success"></span><span data-bind="i18n: 'of'"> of </span><span data-bind="text: status.comm_sent"></span></p>
+              <button data-bind="i18n: 'save', click: saveIP, text: (saveIPFetching() ? i18nextko.t('saving') : (saveIPSuccess() ? i18nextko.t('saved') : i18nextko.t('save'))), disable: saveIPFetching">Save</button>
+
+              <p>
+              </p>
               <button id="apoff" data-bind="i18n: 'poffaccesspoint', visible: status.isWifiAccessPoint, click: wifi.turnOffAccessPoint, disable: wifi.turnOffAccessPointFetching">Turn off Access Point</button>
             </div>
 
@@ -234,6 +233,10 @@
             <p data-bind="visible: config.test_enabled">
               <b data-bind="i18n: 'test_vehicle_state'">test_vehicle_state</b><br>
               <input data-bind="textInput: config.test_vehicle_state" type="number"/>
+            </p>
+            <p data-bind="visible: config.test_enabled">
+              <b data-bind="i18n: 'test_current_energy'">test_current_energy:</b><br>
+              <input data-bind="textInput: config.test_current_energy" type="number" />
             </p>
             <p data-bind="visible: config.test_enabled">
               <b data-bind="i18n: 'test_current_power'">test_current_power:</b><br>

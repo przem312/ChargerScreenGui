@@ -48,6 +48,7 @@ function ConfigViewModel(baseEndpoint) {
     "www_username": "",
     "www_password": "",
     "hostname": false,
+    "ipaddress": "",
     "sntp_enabled": false,
     "sntp_hostname": false,
     "firmware": "-",
@@ -81,6 +82,8 @@ function ConfigViewModel(baseEndpoint) {
     "modbus_port": 502,
     "test_enabled": false,
     "test_vehicle_state": 0,
+    "test_current_energy": 0,
+
     "test_current_power": 0,
     "test_current_time": 0,
     "charge_mode": "full",
